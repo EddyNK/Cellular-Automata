@@ -1,2 +1,2 @@
 # Cellular-Automata
-The game of life beautified
+The game of life 
