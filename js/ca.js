@@ -28,17 +28,17 @@
 /*
   [Wish List] Functions
 
-  -back end-
+  -Model-
   var: generation size
     CreateArr() -> creates and returns a 2d array with nElements = size*size
-    IntitalizeArrState() -> matches array values to cell counterpart
+    RebaseGen() -> matches generation value to its corresponding cell background value
 
   var: rule
     CycleGen(steps) -> applies/calculates rule on generation for selected amount of steps before stoping.
 
-    sim()-> renders when active stops rendering when stoped
+    Sim() -> renders when active stops rendering when stoped
 
-  -front end- 
+  -View- 
   var: size
     MakeWorld() -> initializes a html grid with size columns and rows
     PopulateWorld() -> fills each grid cell with a memeber(cell)
@@ -52,3 +52,63 @@
   var: generation
     render() -> matches cell background color with generation array
 */
+
+/*Globals*/
+var generation = [];
+var rule = 3; //rule 3 default
+var nstate = { alive: 0, dead: 1 };
+var worldSize = 15; //15x15 default
+var delay = 1; //in seconds
+
+/*model*/
+function CreateArr(size) {
+  let row = [];
+  for (rowlen = 0; rowlen < size; rowlen++) {
+    row.push(0);
+  }
+  return row;
+}
+
+function Create2dArr(size) {
+  let col = [];
+  for (len = 0; len < size; len++) {
+    col.push(CreateArr(size));
+  }
+  return col;
+}
+
+generation = Create2dArr(worldSize);
+
+/*view*/
+function AddCells(world, worldSize) {
+  for (row = 0; row < worldSize; row++) {
+    for (col = 0; col < worldSize; col++) {
+      let cell = document.createElement("div");
+      cell.id = `${row}${col}`;
+      cell.style.borderStyle = "solid";
+      cell.style.borderColor = "#D3D3D3";
+      cell.onclick = function () {
+        if (this.style.backgroundColor == "black") {
+          this.style.backgroundColor = "white";
+        } else {
+          this.style.backgroundColor = "black";
+        }
+      };
+      cell.style.height = world.appendChild(cell);
+    }
+  }
+}
+
+function MakeWorld(worldSize, id) {
+  let world = document.createElement("div");
+  world.id = id;
+  world.style.display = "grid";
+  world.style.gridTemplateColumns = `repeat(${worldSize}, 1fr)`;
+  world.style.gridTemplateRows = `repeat(${worldSize}, 1fr)`;
+  world.style.height = "inherit";
+  world.style.width = "inherit";
+  document.getElementById("A").appendChild(world);
+  AddCells(world, worldSize);
+}
+
+MakeWorld(worldSize, "world");
