@@ -1,3 +1,14 @@
+body {
+  background-color: black;
+}
+
+.universe {
+  margin: auto;
+  width: fit-content;
+  text-align: center;
+  color: white;
+}
+
 .container {
   height: 600px;
   width: 600px;
